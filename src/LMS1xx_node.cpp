@@ -97,7 +97,7 @@ int main(int argc, char **argv)
 
     ROS_DEBUG_STREAM("Device resolution is " << (double)outputRange.angleResolution / 10000.0 << " degrees.");
     ROS_DEBUG_STREAM("Device frequency is " << (double)cfg.scaningFrequency / 100.0 << " Hz");
-
+    outputRange.angleResolution = cfg.scaningFrequency;
     int angle_range = outputRange.stopAngle - outputRange.startAngle;
     int num_values = angle_range / outputRange.angleResolution;
     if (angle_range % outputRange.angleResolution == 0)
@@ -148,14 +148,12 @@ int main(int argc, char **argv)
       ROS_DEBUG("Ready status achieved.");
       break;
     }
-
       if (ros::Time::now() > ready_status_timeout)
       {
         ROS_WARN("Timed out waiting for ready status. Trying again.");
         laser.disconnect();
         continue;
       }
-
       if (!ros::ok())
       {
         laser.disconnect();
@@ -205,7 +203,7 @@ int main(int argc, char **argv)
       else
       {
         ROS_ERROR("Laser timed out on delivering scan, attempting to reinitialize.");
-        break;
+        //break;
       }
 
       ros::spinOnce();
