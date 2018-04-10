@@ -337,6 +337,7 @@ void LMS1xx::parseScanData(char* buffer, scanData* data)
     {
       type = 3;
     }
+    if(type == -1) break;
     tok = strtok(NULL, " "); //ScalingFactor
     tok = strtok(NULL, " "); //ScalingOffset
     tok = strtok(NULL, " "); //Starting angle
